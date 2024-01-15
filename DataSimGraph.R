@@ -1,27 +1,26 @@
-#par(mfrow = c(1, 3))
-#pdf(file = "Plot.pdf",width = 20, height = 4) # The height of the plot in inches
+set.seed(1)
 library(rethinking)
 
-# https://urldefense.proofpoint.com/v2/url?u=https-3A__www.inference.vc_about_&d=DwIGaQ&c=5rLNXN0mp_7LMh3Fds96xpjyD06ZuE2RU7zikolS0lg&r=y76TMtVUYsFGbfDq9nJS0WbZeQ76UT6_9yhZbHeshcQ&m=e6KY6F0bru3Z9Lc4PqtZJxd74EsKcVo-jt4VvEFhWfOx0lyO44QyKpwS742pQqOA&s=V_jbf9o9uWCZdkae9l_aW4jDnYxKamJgq3G0OLsTbhI&e= 
 N <- 1000 # sets the number of replicate for each simulation
-a <- 0.7
-cols <- c( col.alpha(2,a) , col.alpha(3,a) )
 
 
 # fork
+
+# simulation
 Smoking_status <- rbern(N, prob=inv_logit(0.5)) 
-IHD <- rnorm(N, mean = Smoking_status, sd = 1)
-Lung_Cancer <- rnorm(N, mean = Smoking_status) # with a probability proportional to X
+IHD <- rnorm(N, mean = Smoking_status)
+Lung_Cancer <- rnorm(N, mean = Smoking_status) 
 
-
-png(file = "figures/Fork.png",width = 2000, height = 2000,res=300)
-
+# graphical parameters
 mysubtitle = "Lung Cancer ← Smoking → Ischaemic Heart Disease"
-
 my_lab <- c('Lung Cancer ~ Ischaemic Heart Disease',
-            expression(Lung~Cancer%~%Ischaemic~Heart~Disease['Smoking status=0']),
-            expression(Lung~Cancer%~%Ischaemic~Heart~Disease['Smoking status=1']))
+            expression(Lung~Cancer%~%Ischaemic~Heart~Disease['Smoking status=1']),
+            expression(Lung~Cancer%~%Ischaemic~Heart~Disease['Smoking status=0']))
+a <- 0.7
+cols <- c( col.alpha(2,a) , col.alpha(3,a) )
 
+# Figure
+png(file = "figures/Fork.png",width = 2000, height = 2000,res=300)
 plot(Lung_Cancer,
      IHD,
      main="The Fork", 
@@ -31,16 +30,14 @@ plot(Lung_Cancer,
      yaxt="n",
      xlab="Lung Cancer",
      ylab="Ischaemic Heart Disease")
-
+mtext(side = 3, mysubtitle)
+legend("topleft", legend=my_lab, col=c(1,3,2), lty=c(2,1,1), cex=0.8,bty="n")
+# no stratification 
 abline(lm(Lung_Cancer~IHD),lwd=3,lty=2,col=1)
-
 #Stratify by Smoking_status==1
 abline(lm(Lung_Cancer[Smoking_status==1]~IHD[Smoking_status==1]),lwd=3,lty=1,col=3)
 #Stratify by Smoking_status==0
 abline(lm(Lung_Cancer[Smoking_status==0]~IHD[Smoking_status==0]),lwd=3,lty=1,col=2)
-
-mtext(side = 3, mysubtitle)
-legend("topleft", legend=my_lab, col=c(1,3,2), lty=c(2,1,1), cex=0.8,bty="n")
 dev.off()
 
 # pipe
