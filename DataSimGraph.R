@@ -1,12 +1,20 @@
 set.seed(1)
-
+# function for the simulation
 inv_logit <- function (x) {
   p <- 1/(1 + exp(-x))
   p <- ifelse(x == Inf, 1, p)
   p
 }
+rbern <- function (n, prob = 0.5) {
+  rbinom(n, size = 1, prob = prob)
+}
+# general graphical parameters
+a <- 0.7
+cols <- palette.colors(palette = 'R4', alpha = a)[3:4]
+
 
 N <- 1000 # sets the number of replicate for each simulation
+
 
 
 # fork
@@ -21,8 +29,7 @@ mysubtitle = "Lung Cancer ← Smoking → Ischaemic Heart Disease"
 my_lab <- c('Lung Cancer ~ Ischaemic Heart Disease',
             expression(Lung~Cancer%~%Ischaemic~Heart~Disease['Smoking status=1']),
             expression(Lung~Cancer%~%Ischaemic~Heart~Disease['Smoking status=0']))
-a <- 0.7
-cols <- c( col.alpha(3,a) , col.alpha(4,a) )
+
 
 # Figure
 png(file = "figures/Fork.png",width = 2000, height = 2000, res=300)
@@ -46,7 +53,7 @@ dev.off()
 # simulation
 oncogenic_mutation <- rnorm(N)
 tumor_grading <- rbern(N,inv_logit(oncogenic_mutation))
-survival <- rnorm(N,(2*tumor_grading-1))
+survival <- rnorm(N,(-2*tumor_grading))
 
 # graphical parameters
 mysubtitle = "Oncogenic Mutation → Tumor Grading → Survival"
@@ -61,14 +68,14 @@ plot(oncogenic_mutation,survival,
      pch=16, xaxt="n",yaxt="n",
      xlab="Amount of Oncogenic Mutation", ylab="Probability of Survival")
 mtext(side = 3, mysubtitle)
-legend("topleft", legend=my_lab, col=c("black", 4,3), lwd = 2, lty=c(2,1,1), cex=0.8,bty="n")
-legend('bottomright', legend = c('High-grade', 'Low-grade'), pch = 16, col = c(4,3), bty = 'n')
+legend("topleft", legend=my_lab, col=c("black", 4,3), lwd = 2, lty=c(2,1,1), cex=0.8)
+legend('bottomright', legend = c('High-grade', 'Low-grade'), pch = 16, col = c(4,3))
 # no stratification
 abline(lm(oncogenic_mutation~survival),lwd=3,lty=2,col="black")
 #Stratify by HG
-abline(lm(oncogenic_mutation[tumor_grading==1]~survival[tumor_grading==1]),lwd=3,lty=1,col=4)
+abline(lm(oncogenic_mutation[tumor_grading==1]~survival[tumor_grading==1]),lwd=3,lty=1,col=3)
 #Stratify by LG
-abline(lm(oncogenic_mutation[tumor_grading==0]~survival[tumor_grading==0]),lwd=3,lty=1,col=3)
+abline(lm(oncogenic_mutation[tumor_grading==0]~survival[tumor_grading==0]),lwd=3,lty=1,col=4)
 
 dev.off()
 
