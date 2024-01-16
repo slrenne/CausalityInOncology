@@ -68,7 +68,7 @@ plot(oncogenic_mutation,survival,
      pch=16, xaxt="n",yaxt="n",
      xlab="Amount of Oncogenic Mutation", ylab="Probability of Survival")
 mtext(side = 3, mysubtitle)
-legend("topleft", legend=my_lab, col=c("black", 4,3), lwd = 2, lty=c(2,1,1), cex=0.8)
+legend("topleft", legend=my_lab, col=c("black", 3,4), lwd = 2, lty=c(2,1,1), cex=0.8)
 legend('bottomright', legend = c('High-grade', 'Low-grade'), pch = 16, col = c(4,3))
 # no stratification
 abline(lm(oncogenic_mutation~survival),lwd=3,lty=2,col="black")
@@ -76,7 +76,6 @@ abline(lm(oncogenic_mutation~survival),lwd=3,lty=2,col="black")
 abline(lm(oncogenic_mutation[tumor_grading==1]~survival[tumor_grading==1]),lwd=3,lty=1,col=3)
 #Stratify by LG
 abline(lm(oncogenic_mutation[tumor_grading==0]~survival[tumor_grading==0]),lwd=3,lty=1,col=4)
-
 dev.off()
 
 
