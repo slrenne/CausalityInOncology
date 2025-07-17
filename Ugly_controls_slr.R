@@ -130,12 +130,15 @@ pl_ci_comp(x,y,z, filename = ugly)
 ##############################################
 
 ugly <- "3.6.2_for_craf"
+u <- rnorm(n)
 x <- rnorm(n)
 z <- rnorm(n, mean = x)
-y <- rnorm(n, mean = x)
+y <- rnorm(n, mean = x + u)
+s <- rbern(n, prob = inv_logit( z + u ))
+s <- as.logical(s)
 
-pl_data_sim(x,y,z, filename = ugly)
-pl_ci_comp(x,y,z, filename = ugly)
+pl_data_sim(x[s],y[s],z[s], filename = ugly)
+pl_ci_comp(x[s],y[s],z[s], filename = ugly)
 
 
 ##############################################
@@ -145,8 +148,8 @@ pl_ci_comp(x,y,z, filename = ugly)
 ##############################################
 
 ugly <- "3.6.3_pip_craf"
-x <- rnorm(n)
 z <- rnorm(n)
+x <- rnorm(n)
 u <- rnorm(n, mean = x + z)
 y <- rnorm(n, mean = u)
 
@@ -156,7 +159,7 @@ pl_ci_comp(x,y,z, filename = ugly)
 
 ##############################################
 #                                            #
-#     3.6.4 The Bad Piping Parasite          #
+#     3.6.4 The pre Piping Parasite          #
 #                                            #
 ##############################################
 
@@ -180,6 +183,38 @@ z <- rnorm(n)
 u <- rnorm(n)
 x <- rnorm(n, mean = z + u)
 y <- rnorm(n, mean = x + u)
+
+pl_data_sim(x,y,z, filename = ugly)
+pl_ci_comp(x,y,z, filename = ugly)
+
+##############################################
+#                                            #
+#     3.6.6 The post Piping Parasite         #
+#                                            #
+##############################################
+
+ugly <- "3.6.6_popip_par"
+
+x <- rnorm(n)
+y <- rnorm(n, mean = x)
+z <- rnorm(n, mean = y)
+
+pl_data_sim(x,y,z, filename = ugly)
+pl_ci_comp(x,y,z, filename = ugly)
+
+
+
+##############################################
+#                                            #
+#     3.6.7 The post Piping Parasite         #
+#                                            #
+##############################################
+
+ugly <- "3.6.7_biapopip_par"
+u <- rnorm(n)
+x <- rnorm(n, mean = u)
+y <- rnorm(n, mean = x + u)
+z <- rnorm(n, mean = y)
 
 pl_data_sim(x,y,z, filename = ugly)
 pl_ci_comp(x,y,z, filename = ugly)
