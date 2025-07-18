@@ -1,0 +1,9 @@
+ %\centering
+  \begin{tikzpicture}[thick,scale=0.3, every node/.style={scale=0.7},x=2cm, y=3cm]{
+    \node [blue, label=below:\begin{tabular}{c}(Gene)\end{tabular}] (Gene) at (0,0) {$\bullet$};
+    \node [blue, label=below:\begin{tabular}{c}(Smoking)\end{tabular}] (Smoking) at (5,0) {$\bullet$};
+    \node [red,label=above:\begin{tabular}{c}(SES)\end{tabular}] (SES) at (6,3) {$\bullet$};
+    \path [blue] (Gene) edge (Smoking);
+    \path (SES) edge (Smoking);
+}
+\end{tikzpicture}

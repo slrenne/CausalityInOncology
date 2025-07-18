@@ -1,0 +1,9 @@
+\begin{tikzpicture}[thick,scale=0.3, every node/.style={scale=0.7}]{
+        \node [label=below:\begin{tabular}{c}Lung\\ Cancer\\(X) \end{tabular}] (k) at (0,3) {$\bullet$};
+        \node [label=below:\begin{tabular}{c}Ischemic\\ Heart Disease\\ (Y)\end{tabular}] (i) at (10,3) {$\bullet$};
+        \node [label=above:\begin{tabular}{c}Smoking\\ (Z) \end{tabular}] (s) at (5,15) {$\bullet$};
+
+        \path (s) edge (i);
+        \path (s) edge (k);
+        }
+        \end{tikzpicture}

@@ -1,0 +1,9 @@
+\begin{tikzpicture}[thick, scale=0.5, every node/.style={scale=0.7}]{
+        \node [label=above:Age] (a) at (8,6) {$\bullet$};
+        \node [label=above:\begin{tabular}{c}Carcinogens \\ Exposure\end{tabular}] (s) at (0,6) {$\bullet$};
+        \node [label=below:\begin{tabular}{c}Cancer \\ Presence \end{tabular}] (x) at (4,0) {$\bullet$};
+    
+        \path (a) edge (x);
+        \path (s) edge (x);
+        }   
+        \end{tikzpicture} 

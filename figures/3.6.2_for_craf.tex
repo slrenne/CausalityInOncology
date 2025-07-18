@@ -1,0 +1,18 @@
+\begin{tikzpicture}[thick, scale=0.7, every node/.style={scale=0.8}]
+    % Nodes
+    \node[blue, label=left:$x$] (x) at (0,0) {$\bullet$};
+    \node[blue, label=below:$z$] (z) at (3,0) {$\bullet$};
+    \node[blue, label=below:$y$] (y) at (1.5,-2) {$\bullet$};
+    \node[red, label=above:$u$] (u) at (1.5,2) {$\bullet$};
+    \node[black, label=right:$s$] (s) at (4.5,1) {$\bullet$};
+
+    % Edges
+    \path[->] (x) edge (z);
+    \path[->] (x) edge (y);
+    \path[->] (u) edge (y);
+    \path[->] (u) edge (s);
+    \path[->] (z) edge (s);
+
+    % Selection variable
+    \node[draw, ellipse, dashed, fit=(s), inner sep=8pt] {};
+\end{tikzpicture}

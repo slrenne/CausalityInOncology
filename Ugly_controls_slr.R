@@ -22,28 +22,30 @@ pl_data_sim <- function(x, y, z,
                         save = TRUE, 
                         filename = "") {
   n <- length(x)  # determine number of points
+  z_uni <- length(unique(z))
   
   # Fit models
   m1 <- lm(y ~ x)
   m2 <- lm(y ~ x + z)
   
   # Create colors based on z
-  col_vals <- viridis(n, alpha = 0.5)[rank(z)]
+  col_vals <- viridis(z_uni, alpha = 0.5)
+  col_ord <- as.numeric(factor(z))
   
   # Labels for legend
   lab <- c(expression(y %~% x), expression(y %~% x + z))
   
   # Open file device if saving
   if (save) {
-    filename <- paste0(filename,"_")
+    if (filename != "") filename <- paste0(filename,"_a_")
     png(filename = paste0("figures/",filename,"sim.png"), width = 2000, height = 2000, res = 300)
   }
   
   # Plot
-  plot(x = x, y = y, 
-       col = col_vals,
+  plot(x = x, y = y, col = 1,
+       bg = col_vals[col_ord],
        main = "Data Simulation",
-       pch = 16, cex = 1 + inv_logit(z) *.7 ,
+       pch = 21, 
        xaxt = "n", yaxt = "n",
        xlab = xlab, ylab = ylab)
   
@@ -51,9 +53,10 @@ pl_data_sim <- function(x, y, z,
   abline(m2$coefficients[1:2], lwd = 3, lty = 3, col = 4)
   
   legend("topleft", legend = lab,
-         col = c(3, 4), lty = c(2, 3), lwd = 3, bty = "n")
+         col = c(3, 4), lty = c(2, 3), lwd = 3)
+  fill_val <- col_vals[c(1,z_uni)]
   legend("bottomright", legend = c(zlow, zhigh),
-         fill = viridis(2, alpha = 0.5), bty = "n")
+         fill = fill_val)
   
   # Close device if saving
   if (save) dev.off()
@@ -80,7 +83,7 @@ pl_ci_comp <- function(x, y, z,
   
   # Open file device if saving
   if (save) {
-    filename <- paste0(filename,"_")
+    if (filename != "") filename <- paste0(filename,"_b_")
     png(filename = paste0("figures/",filename,"comp.png"), width = 2000, height = 2000, res = 300)
   }
   
@@ -101,12 +104,66 @@ pl_ci_comp <- function(x, y, z,
   }
   
   legend("bottomright", legend = "True Effect",
-         col = "gray", lty = 2, bty = "n")
+         col = "gray", lty = 2)
   
   # Close device if saving
   if (save) dev.off()
 }
 
+
+
+
+##############################################
+#                                            #
+#     2.2.1 The Fork                         #
+#                                            #
+##############################################
+
+ugly <- "2.2.1_fork"
+z <- rbern(n, prob = 0.5 ) 
+x <- rnorm(n, mean = 2 *z)
+y <- rnorm(n, mean = 2 *z) 
+
+pl_data_sim(x,y,z, filename = ugly, 
+            xlab = "Cancer", ylab = "IHD", 
+            zlow = "Non-smokers",
+            zhigh = "Smokers")
+
+
+##############################################
+#                                            #
+#     2.2.2 The Pipe                         #
+#                                            #
+##############################################
+
+ugly <- "2.2.2_pipe"
+x <- rnorm(n)
+z <- rbern(n, prob = inv_logit(1.5 * x))
+y <- rnorm(n, mean = - z) 
+
+pl_data_sim(x,y,z, filename = ugly, 
+            xlab = "Oncogenic Mutations", ylab = "Survival probability", 
+            zlow = "Low-grade",
+            zhigh = "High-Grade")
+
+
+
+##############################################
+#                                            #
+#     2.2.3 The Collider                     #
+#                                            #
+##############################################
+
+ugly <- "2.2.3_coll"
+x <- rnorm(n)
+y <- rnorm(n) 
+z <- rbern(n, prob = inv_logit(2 *x + 2* y ))
+
+pl_data_sim(x,y,z, filename = ugly, 
+            xlab =  "Genetic Cancer Syndrome",
+            ylab = "Carcinogen Exposure", 
+            zlow = "Non neoplastic Pts",
+            zhigh = "Neoplastic Pts")
 
 
 ##############################################
@@ -133,8 +190,8 @@ ugly <- "3.6.2_for_craf"
 u <- rnorm(n)
 x <- rnorm(n)
 z <- rnorm(n, mean = x)
-y <- rnorm(n, mean = x + u)
-s <- rbern(n, prob = inv_logit( z + u ))
+y <- rnorm(n, mean = x + 2 * u )
+s <- rbern(n, prob = inv_logit( z  + 2* u ))
 s <- as.logical(s)
 
 pl_data_sim(x[s],y[s],z[s], filename = ugly)
@@ -164,9 +221,9 @@ pl_ci_comp(x,y,z, filename = ugly)
 ##############################################
 
 ugly <- "3.6.4_pip_par"
-z <- rnorm(n)
-x <- rnorm(n, mean = z)
-y <- rnorm(n, mean = x)
+z <- rbern(n)
+x <- rnorm(n, mean = z, sd = 0.2)
+y <- rnorm(n, mean = x, sd = 3)
 
 pl_data_sim(x,y,z, filename = ugly)
 pl_ci_comp(x,y,z, filename = ugly)
