@@ -6,9 +6,9 @@
     \begin{subfigure}[b]{0.47\textwidth}
      \centering
     \begin{tikzpicture}[thick,scale=0.5, every node/.style={scale=0.8}]{
-    \node [blue, label=above:\begin{tabular}{c}(Y)\\Lung Cancer\end{tabular}] (Y) at (10,10) {$\bullet$};
-    \node [blue, label=above:\begin{tabular}{c}(X) \\Gene \end{tabular}] (X) at (0,10) {$\bullet$};
-    \node [red, label=below:\begin{tabular}{c}(Z)\\Lung Cancer \end{tabular}] (Z) at (5,5) {$\bullet$};
+    \node [blue, label=above:\begin{tabular}{c}(Y)\\EMT\end{tabular}] (Y) at (10,10) {$\bullet$};
+    \node [blue, label=above:\begin{tabular}{c}(X) \\VETC \end{tabular}] (X) at (0,10) {$\bullet$};
+    \node [red, label=below:\begin{tabular}{c}(Z)\\Metastatic HCC \end{tabular}] (Z) at (5,5) {$\bullet$};
 
     \path (X) edge (Z);
     \path [blue] (X) edge (Y);
@@ -23,10 +23,10 @@
     \begin{subfigure}[b]{0.47\textwidth}
     \centering
         \begin{tikzpicture}[thick,scale=0.5, every node/.style={scale=0.8}]{
-    \node [label=below:\begin{tabular}{c}(U)\\HPV\end{tabular}] (U) at (15,5) {$\circ$};
-    \node [blue, label=above:\begin{tabular}{c}(X)\\Smoking\end{tabular}] (X) at (5,10) {$\bullet$};
-    \node [red, label=below:\begin{tabular}{c}(Z)\\H\&N\end{tabular}] (Z) at (10,5) {$\bullet$};
-    \node [blue, label=above:\begin{tabular}{c}(Y)\\PAP\end{tabular}] (Y) at (15,10) {$\bullet$};
+    \node [label=below:\begin{tabular}{c}(U)\\Lines of Treatment\end{tabular}] (U) at (15,5) {$\circ$};
+    \node [blue, label=above:\begin{tabular}{c}(X)\\Histotype\end{tabular}] (X) at (5,10) {$\bullet$};
+    \node [red, label=below:\begin{tabular}{c}(Z)\\Treatment\end{tabular}] (Z) at (10,5) {$\bullet$};
+    \node [blue, label=above:\begin{tabular}{c}(Y)\\Survival\end{tabular}] (Y) at (15,10) {$\bullet$};
 
     \path (U) edge (Z);
     \path (U) edge (Y);
@@ -47,8 +47,8 @@
     \begin{tikzpicture}[thick,scale=0.5, every node/.style={scale=0.8}]{
     
     \node [blue, label=above:\begin{tabular}{c}(Y)\\SCC\end{tabular}] (Y) at (10,5) {$\bullet$};
-    \node [blue, label=above:\begin{tabular}{c}(X)\\HRHPV\end{tabular}] (X) at (0,5) {$\bullet$};
-    \node [red, label=above:\begin{tabular}{c}(Z)\\CN3\end{tabular}] (Z) at (5,5) {$\bullet$};
+    \node [blue, label=above:\begin{tabular}{c}(X)\\HR-HPV\end{tabular}] (X) at (0,5) {$\bullet$};
+    \node [red, label=above:\begin{tabular}{c}(Z)\\CIN3\end{tabular}] (Z) at (5,5) {$\bullet$};
 
     \path [blue] (X) edge (Z);
     \path [blue] (Z) edge (Y);
@@ -64,9 +64,9 @@
          \centering
         \begin{tikzpicture}[thick,scale=0.5, every node/.style={scale=0.8}]{
     \node [blue, label=below:\begin{tabular}{c}(Y)\\SCC\end{tabular}] (Y) at (10,3) {$\bullet$};
-    \node [blue, label=below:\begin{tabular}{c}(X)\\HRHPV\end{tabular}] (X) at (0,3) {$\bullet$};
-    \node [label=above:(M) CN3] (M) at (5,3) {$\bullet$};
-    \node [red, label=below:\begin{tabular}{c}(Z)\\PAP\end{tabular}] (Z) at (5,0) {$\bullet$};
+    \node [blue, label=below:\begin{tabular}{c}(X)\\HR-HPV\end{tabular}] (X) at (0,3) {$\bullet$};
+    \node [label=above:(M) CIN3] (M) at (5,3) {$\bullet$};
+    \node [red, label=below:\begin{tabular}{c}(Z)\\HSIL on PAP\end{tabular}] (Z) at (5,0) {$\bullet$};
     \path [blue](X) edge (M);
     \path [blue] (M) edge (Y);
     \path (M) edge (Z);
@@ -84,7 +84,7 @@
     \node [label=above:\begin{tabular}{c}Age\\(U\textsubscript{1})\end{tabular}] (Age) at (12,10) {$\circ$};
     \node [blue, label=below:\begin{tabular}{c}Lung Cancer\\(X)\end{tabular}] (LungCancer) at (0,0) {$\bullet$};
     \node [blue,label=below:\begin{tabular}{c}Survival\\(Y)\end{tabular}] (Survival) at (12,0) {$\bullet$};
-    \node [red, label=above:\begin{tabular}{c}DLCO\textsubscript{2}\\(Z)\end{tabular}] (Measure) at (6,5) {$\bullet$};
+    \node [red, label=below:\begin{tabular}{c}Finger clubbing\\(Z)\end{tabular}] (Measure) at (6,5) {$\bullet$};
     
     \path (Smoking) edge (LungCancer);
     \path (Age) edge (Survival);
@@ -105,7 +105,7 @@
     \node [label=above:\begin{tabular}{c}Age\\(U\textsubscript{1})\end{tabular}] (Age) at (12,10) {$\circ$};
     \node [blue, label=below:\begin{tabular}{c}Lung Cancer\\(X)\end{tabular}] (LungCancer) at (0,0) {$\bullet$};
     \node [blue, label=below:\begin{tabular}{c}Survival\\(Y)\end{tabular}] (Survival) at (12,0) {$\bullet$};
-    \node [red, label=above:\begin{tabular}{c}DLCO\textsubscript{2}\\(Z)\end{tabular}] (DLCO) at (6,5) {$\bullet$};
+    \node [red, label=above:\begin{tabular}{c}IHD\\(Z)\end{tabular}] (DLCO) at (6,5) {$\bullet$};
     
     \path (Smoking) edge (LungCancer);
     \path (Age) edge (Survival);
